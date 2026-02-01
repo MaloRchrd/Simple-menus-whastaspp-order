@@ -3,64 +3,104 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Menu Restaurant</title>
+<title>Menu Restaurant Moderne</title>
 <style>
   body {
-    font-family: Arial, sans-serif;
-    padding: 20px;
-    background: #f8f8f8;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    background: #f0f2f5;
   }
   h1 {
     text-align: center;
+    margin: 20px 0;
+    color: #333;
   }
   .menu {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
+    padding-bottom: 120px; /* espace pour le panier fixe */
   }
   .card {
     background: #fff;
-    border-radius: 8px;
-    width: 200px;
-    padding: 15px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border-radius: 15px;
+    width: 220px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
     text-align: center;
+    transition: transform 0.2s;
+  }
+  .card:hover {
+    transform: translateY(-5px);
   }
   .card img {
     width: 100%;
-    border-radius: 8px;
+    height: 150px;
+    object-fit: cover;
   }
   .card h3 {
     margin: 10px 0 5px;
+    font-size: 18px;
+    color: #222;
   }
   .card p {
     margin: 5px 0;
+    color: #555;
   }
-  .card input[type="number"] {
+  .quantity-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+    gap: 10px;
+  }
+  .quantity-container button {
+    width: 30px;
+    height: 30px;
+    border: none;
+    background: #25D366;
+    color: #fff;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+  }
+  .quantity-container input {
     width: 50px;
+    text-align: center;
+    border-radius: 5px;
+    border: 1px solid #ccc;
     padding: 5px;
-    margin-top: 5px;
+    font-size: 16px;
   }
+
+  /* Panier fixe en bas */
   .cart {
-    margin-top: 30px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
     background: #fff;
+    box-shadow: 0 -4px 10px rgba(0,0,0,0.1);
     padding: 15px;
-    border-radius: 8px;
-    max-width: 500px;
-    margin-left: auto;
-    margin-right: auto;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    max-width: 600px;
+    margin: 0 auto;
+    width: 100%;
   }
   .cart h2 {
-    margin-top: 0;
+    margin: 0 0 10px 0;
+    font-size: 18px;
+    color: #333;
   }
   .whatsapp-btn {
-    margin-top: 15px;
-    padding: 10px 20px;
+    margin-top: 10px;
+    padding: 12px;
     background: #25D366;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
     width: 100%;
     font-size: 16px;
@@ -89,43 +129,54 @@
 </head>
 <body>
 
-<h1>Menu</h1>
+<h1>Menu Gourmand 🍽️</h1>
 
 <div class="menu">
-  <div class="card" data-name="Pizza Margherita" data-price="8.5">
-    <img src="https://via.placeholder.com/200x150.png?text=Pizza" alt="Pizza Margherita">
+  <div class="card" data-name="Pizza Margherita 🍕" data-price="8.5">
+    <img src="https://unsplash.it/220/150?food=1" alt="Pizza Margherita">
     <h3>Pizza Margherita</h3>
     <p>Prix: 8,50 €</p>
-    <input type="number" min="0" value="0">
+    <div class="quantity-container">
+      <button class="minus">-</button>
+      <input type="number" min="0" value="0">
+      <button class="plus">+</button>
+    </div>
   </div>
-  <div class="card" data-name="Burger Classique" data-price="6.5">
-    <img src="https://via.placeholder.com/200x150.png?text=Burger" alt="Burger Classique">
+  <div class="card" data-name="Burger Classique 🍔" data-price="6.5">
+    <img src="https://unsplash.it/220/150?food=2" alt="Burger Classique">
     <h3>Burger Classique</h3>
     <p>Prix: 6,50 €</p>
-    <input type="number" min="0" value="0">
+    <div class="quantity-container">
+      <button class="minus">-</button>
+      <input type="number" min="0" value="0">
+      <button class="plus">+</button>
+    </div>
   </div>
-  <div class="card" data-name="Salade César" data-price="7.5">
-    <img src="https://via.placeholder.com/200x150.png?text=Salade" alt="Salade César">
+  <div class="card" data-name="Salade César 🥗" data-price="7.5">
+    <img src="https://unsplash.it/220/150?food=3" alt="Salade César">
     <h3>Salade César</h3>
     <p>Prix: 7,50 €</p>
-    <input type="number" min="0" value="0">
+    <div class="quantity-container">
+      <button class="minus">-</button>
+      <input type="number" min="0" value="0">
+      <button class="plus">+</button>
+    </div>
   </div>
 </div>
 
 <div class="cart">
-  <h2>Récapitulatif</h2>
+  <h2>🛒 Récapitulatif</h2>
   <div id="cart-items">Aucun article sélectionné</div>
   <p id="total"></p>
 
-  <!-- Sélecteur date/heure + Dès que possible -->
   <div class="asap-container">
     <input type="checkbox" id="asap">
-    <label for="asap">Dès que possible</label>
+    <label for="asap">Dès que possible ⏱️</label>
   </div>
-  <label for="delivery-time">Date et heure souhaitées :</label>
+  <label for="delivery-time">Date et heure souhaitées 📅</label>
   <input type="datetime-local" id="delivery-time">
 
-  <button class="whatsapp-btn" id="sendWhatsApp">Envoyer par WhatsApp</button>
+  <button class="whatsapp-btn" id="sendWhatsApp">Envoyer par WhatsApp 📲</button>
 </div>
 
 <script>
@@ -140,7 +191,8 @@ function updateCart() {
   let cartText = '';
   let total = 0;
   cards.forEach(card => {
-    const quantity = parseInt(card.querySelector('input').value);
+    const input = card.querySelector('input');
+    const quantity = parseInt(input.value);
     const name = card.dataset.name;
     const price = parseFloat(card.dataset.price);
     if (quantity > 0) {
@@ -152,12 +204,28 @@ function updateCart() {
   totalDiv.textContent = total ? `Total: ${total.toFixed(2)} €` : '';
 }
 
-// Met à jour le panier à chaque changement de quantité
+// Boutons + / -
 cards.forEach(card => {
-  card.querySelector('input').addEventListener('input', updateCart);
+  const minusBtn = card.querySelector('.minus');
+  const plusBtn = card.querySelector('.plus');
+  const input = card.querySelector('input');
+
+  minusBtn.addEventListener('click', () => {
+    let val = parseInt(input.value);
+    if (val > 0) input.value = val - 1;
+    updateCart();
+  });
+
+  plusBtn.addEventListener('click', () => {
+    let val = parseInt(input.value);
+    input.value = val + 1;
+    updateCart();
+  });
+
+  input.addEventListener('input', updateCart);
 });
 
-// Désactive ou active le sélecteur si "Dès que possible" est coché
+// Désactive/active le sélecteur si "Dès que possible"
 asapCheckbox.addEventListener('change', () => {
   deliveryInput.disabled = asapCheckbox.checked;
 });
@@ -169,17 +237,18 @@ function formatDateReadable(datetimeStr) {
   return date.toLocaleDateString('fr-FR', options);
 }
 
-// Bouton WhatsApp
+// WhatsApp
 whatsappBtn.addEventListener('click', () => {
-  let message = 'Commande :\n';
+  let message = '🛒 **Ma commande :**\n';
   let total = 0;
 
   cards.forEach(card => {
-    const quantity = parseInt(card.querySelector('input').value);
+    const input = card.querySelector('input');
+    const quantity = parseInt(input.value);
     const name = card.dataset.name;
     const price = parseFloat(card.dataset.price);
     if (quantity > 0) {
-      message += `${name} x${quantity} - ${(price*quantity).toFixed(2)} €\n`;
+      message += `- ${name} x${quantity} = ${(price*quantity).toFixed(2)} €\n`;
       total += price * quantity;
     }
   });
@@ -189,13 +258,12 @@ whatsappBtn.addEventListener('click', () => {
     return;
   }
 
-  message += `Total: ${total.toFixed(2)} €\n`;
+  message += `💰 Total: ${total.toFixed(2)} €\n`;
 
-  // Heure souhaitée
   if (asapCheckbox.checked) {
-    message += `Heure souhaitée : Dès que possible`;
+    message += `⏱️ Heure souhaitée : Dès que possible`;
   } else if (deliveryInput.value) {
-    message += `Heure souhaitée : ${formatDateReadable(deliveryInput.value)}`;
+    message += `📅 Heure souhaitée : ${formatDateReadable(deliveryInput.value)}`;
   }
 
   const phoneNumber = '33612345678'; // Remplace par ton numéro WhatsApp (sans le +)
@@ -203,7 +271,6 @@ whatsappBtn.addEventListener('click', () => {
   window.open(url, '_blank');
 });
 
-// Initial update
 updateCart();
 </script>
 
