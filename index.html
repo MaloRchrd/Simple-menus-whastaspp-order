@@ -9,6 +9,7 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     background: #f0f2f5;
+    padding-bottom: 150px; /* espace pour panier */
   }
   h1 {
     text-align: center;
@@ -20,7 +21,6 @@
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
-    padding-bottom: 120px; /* espace pour le panier fixe */
   }
   .card {
     background: #fff;
@@ -75,21 +75,46 @@
   }
 
   /* Panier fixe en bas */
-  .cart {
+  .cart-container {
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
-    background: #fff;
-    box-shadow: 0 -4px 10px rgba(0,0,0,0.1);
-    padding: 15px;
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
     max-width: 600px;
     margin: 0 auto;
     width: 100%;
+    z-index: 1000;
   }
-  .cart h2 {
+  .cart-header {
+    background: #25D366;
+    color: white;
+    padding: 12px 15px;
+    font-size: 16px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .cart-header span {
+    font-weight: bold;
+  }
+  .cart-body {
+    max-height: 0;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 -4px 10px rgba(0,0,0,0.1);
+    transition: max-height 0.3s ease;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    padding: 0 15px;
+  }
+  .cart-body.open {
+    max-height: 400px;
+    padding: 15px;
+  }
+  .cart-body h2 {
     margin: 0 0 10px 0;
     font-size: 18px;
     color: #333;
@@ -164,19 +189,26 @@
   </div>
 </div>
 
-<div class="cart">
-  <h2>🛒 Récapitulatif</h2>
-  <div id="cart-items">Aucun article sélectionné</div>
-  <p id="total"></p>
-
-  <div class="asap-container">
-    <input type="checkbox" id="asap">
-    <label for="asap">Dès que possible ⏱️</label>
+<!-- Panier rétractable -->
+<div class="cart-container">
+  <div class="cart-header" id="cart-toggle">
+    <span>🛒 Panier</span>
+    <span id="toggle-arrow">⬆️</span>
   </div>
-  <label for="delivery-time">Date et heure souhaitées 📅</label>
-  <input type="datetime-local" id="delivery-time">
+  <div class="cart-body" id="cart-body">
+    <h2>Récapitulatif</h2>
+    <div id="cart-items">Aucun article sélectionné</div>
+    <p id="total"></p>
 
-  <button class="whatsapp-btn" id="sendWhatsApp">Envoyer par WhatsApp 📲</button>
+    <div class="asap-container">
+      <input type="checkbox" id="asap">
+      <label for="asap">Dès que possible ⏱️</label>
+    </div>
+    <label for="delivery-time">Date et heure souhaitées 📅</label>
+    <input type="datetime-local" id="delivery-time">
+
+    <button class="whatsapp-btn" id="sendWhatsApp">Envoyer par WhatsApp 📲</button>
+  </div>
 </div>
 
 <script>
@@ -186,6 +218,10 @@ const totalDiv = document.getElementById('total');
 const whatsappBtn = document.getElementById('sendWhatsApp');
 const deliveryInput = document.getElementById('delivery-time');
 const asapCheckbox = document.getElementById('asap');
+
+const cartToggle = document.getElementById('cart-toggle');
+const cartBody = document.getElementById('cart-body');
+const toggleArrow = document.getElementById('toggle-arrow');
 
 function updateCart() {
   let cartText = '';
@@ -228,6 +264,12 @@ cards.forEach(card => {
 // Désactive/active le sélecteur si "Dès que possible"
 asapCheckbox.addEventListener('change', () => {
   deliveryInput.disabled = asapCheckbox.checked;
+});
+
+// Toggle panier
+cartToggle.addEventListener('click', () => {
+  cartBody.classList.toggle('open');
+  toggleArrow.textContent = cartBody.classList.contains('open') ? '⬇️' : '⬆️';
 });
 
 function formatDateReadable(datetimeStr) {
