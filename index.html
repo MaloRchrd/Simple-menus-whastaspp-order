@@ -3,56 +3,68 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Menu Restaurant Moderne</title>
+<title>Menu Restaurant avec Catégories</title>
 <style>
   body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
-    background: #f0f2f5;
-    padding-bottom: 150px; /* espace pour panier */
+    background: #f7f7f7;
+    padding-bottom: 160px; /* reserve space for cart */
   }
   h1 {
     text-align: center;
     margin: 20px 0;
     color: #333;
   }
-  .menu {
+  .category {
+    margin: 30px 15px 10px;
+  }
+  .category h2 {
+    margin: 10px 0;
+    font-size: 22px;
+    color: #555;
+    border-bottom: 2px solid #25D366;
+    padding-bottom: 6px;
+  }
+  .menu-grid {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 18px;
     justify-content: center;
   }
   .card {
     background: #fff;
     border-radius: 15px;
     width: 220px;
-    overflow: hidden;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.08);
     text-align: center;
     transition: transform 0.2s;
   }
   .card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-4px);
   }
   .card img {
     width: 100%;
-    height: 150px;
+    height: 140px;
     object-fit: cover;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
   }
   .card h3 {
-    margin: 10px 0 5px;
+    margin: 8px 0 4px;
     font-size: 18px;
     color: #222;
   }
   .card p {
-    margin: 5px 0;
-    color: #555;
+    margin: 4px 0;
+    color: #666;
+    font-size: 15px;
   }
   .quantity-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 10px 0;
+    margin: 8px 0 12px;
     gap: 10px;
   }
   .quantity-container button {
@@ -66,30 +78,30 @@
     font-size: 18px;
   }
   .quantity-container input {
-    width: 50px;
+    width: 48px;
     text-align: center;
-    border-radius: 5px;
+    border-radius: 6px;
     border: 1px solid #ccc;
-    padding: 5px;
+    padding: 6px;
     font-size: 16px;
   }
 
-  /* Panier fixe en bas */
+  /* Panier rétractable en bas */
   .cart-container {
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
-    max-width: 600px;
+    max-width: 650px;
     margin: 0 auto;
     width: 100%;
-    z-index: 1000;
+    z-index: 999;
   }
   .cart-header {
     background: #25D366;
     color: white;
     padding: 12px 15px;
-    font-size: 16px;
+    font-size: 17px;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
     cursor: pointer;
@@ -97,26 +109,22 @@
     justify-content: space-between;
     align-items: center;
   }
-  .cart-header span {
-    font-weight: bold;
-  }
   .cart-body {
     max-height: 0;
     overflow: hidden;
     background: #fff;
-    box-shadow: 0 -4px 10px rgba(0,0,0,0.1);
     transition: max-height 0.3s ease;
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
     padding: 0 15px;
   }
   .cart-body.open {
-    max-height: 400px;
+    max-height: 460px;
     padding: 15px;
   }
   .cart-body h2 {
-    margin: 0 0 10px 0;
-    font-size: 18px;
+    margin-top: 0;
+    font-size: 19px;
     color: #333;
   }
   .whatsapp-btn {
@@ -136,7 +144,6 @@
   label {
     display: block;
     margin-top: 10px;
-    margin-bottom: 5px;
   }
   #delivery-time {
     width: 100%;
@@ -147,44 +154,92 @@
   .asap-container {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     margin-bottom: 10px;
   }
 </style>
 </head>
 <body>
 
-<h1>Menu Gourmand 🍽️</h1>
+<h1>🍽️ Notre Menu</h1>
 
-<div class="menu">
-  <div class="card" data-name="Pizza Margherita 🍕" data-price="8.5">
-    <img src="https://unsplash.it/220/150?food=1" alt="Pizza Margherita">
-    <h3>Pizza Margherita</h3>
-    <p>Prix: 8,50 €</p>
-    <div class="quantity-container">
-      <button class="minus">-</button>
-      <input type="number" min="0" value="0">
-      <button class="plus">+</button>
+<!-- Catégorie Entrées -->
+<div class="category">
+  <h2>Entrées</h2>
+  <div class="menu-grid">
+    <div class="card" data-name="Bruschetta 🍅" data-price="6.50">
+      <img src="https://unsplash.it/220/140?food=5" alt="Bruschetta">
+      <h3>Bruschetta</h3>
+      <p>6,50 €</p>
+      <div class="quantity-container">
+        <button class="minus">-</button>
+        <input type="number" min="0" value="0">
+        <button class="plus">+</button>
+      </div>
+    </div>
+    <div class="card" data-name="Soupe du jour 🍲" data-price="5.00">
+      <img src="https://unsplash.it/220/140?food=6" alt="Soupe du jour">
+      <h3>Soupe du jour</h3>
+      <p>5,00 €</p>
+      <div class="quantity-container">
+        <button class="minus">-</button>
+        <input type="number" min="0" value="0">
+        <button class="plus">+</button>
+      </div>
     </div>
   </div>
-  <div class="card" data-name="Burger Classique 🍔" data-price="6.5">
-    <img src="https://unsplash.it/220/150?food=2" alt="Burger Classique">
-    <h3>Burger Classique</h3>
-    <p>Prix: 6,50 €</p>
-    <div class="quantity-container">
-      <button class="minus">-</button>
-      <input type="number" min="0" value="0">
-      <button class="plus">+</button>
+</div>
+
+<!-- Catégorie Plats -->
+<div class="category">
+  <h2>Plats principaux</h2>
+  <div class="menu-grid">
+    <div class="card" data-name="Pâtes à la bolognaise 🍝" data-price="11.50">
+      <img src="https://unsplash.it/220/140?food=7" alt="Pâtes à la bolognaise">
+      <h3>Pâtes à la bolognaise</h3>
+      <p>11,50 €</p>
+      <div class="quantity-container">
+        <button class="minus">-</button>
+        <input type="number" min="0" value="0">
+        <button class="plus">+</button>
+      </div>
+    </div>
+    <div class="card" data-name="Burger Gourmet 🍔" data-price="12.90">
+      <img src="https://unsplash.it/220/140?food=8" alt="Burger Gourmet">
+      <h3>Burger Gourmet</h3>
+      <p>12,90 €</p>
+      <div class="quantity-container">
+        <button class="minus">-</button>
+        <input type="number" min="0" value="0">
+        <button class="plus">+</button>
+      </div>
     </div>
   </div>
-  <div class="card" data-name="Salade César 🥗" data-price="7.5">
-    <img src="https://unsplash.it/220/150?food=3" alt="Salade César">
-    <h3>Salade César</h3>
-    <p>Prix: 7,50 €</p>
-    <div class="quantity-container">
-      <button class="minus">-</button>
-      <input type="number" min="0" value="0">
-      <button class="plus">+</button>
+</div>
+
+<!-- Catégorie Desserts -->
+<div class="category">
+  <h2>Desserts</h2>
+  <div class="menu-grid">
+    <div class="card" data-name="Tiramisu 🍰" data-price="6.00">
+      <img src="https://unsplash.it/220/140?food=9" alt="Tiramisu">
+      <h3>Tiramisu</h3>
+      <p>6,00 €</p>
+      <div class="quantity-container">
+        <button class="minus">-</button>
+        <input type="number" min="0" value="0">
+        <button class="plus">+</button>
+      </div>
+    </div>
+    <div class="card" data-name="Crème brûlée 🍮" data-price="5.50">
+      <img src="https://unsplash.it/220/140?food=10" alt="Crème brûlée">
+      <h3>Crème brûlée</h3>
+      <p>5,50 €</p>
+      <div class="quantity-container">
+        <button class="minus">-</button>
+        <input type="number" min="0" value="0">
+        <button class="plus">+</button>
+      </div>
     </div>
   </div>
 </div>
@@ -192,7 +247,7 @@
 <!-- Panier rétractable -->
 <div class="cart-container">
   <div class="cart-header" id="cart-toggle">
-    <span>🛒 Panier</span>
+    <span>🛒 Mon Panier</span>
     <span id="toggle-arrow">⬆️</span>
   </div>
   <div class="cart-body" id="cart-body">
@@ -212,6 +267,8 @@
 </div>
 
 <script>
+// JavaScript pour gestion quantité + panier + WhatsApp
+
 const cards = document.querySelectorAll('.card');
 const cartItemsDiv = document.getElementById('cart-items');
 const totalDiv = document.getElementById('total');
@@ -228,89 +285,67 @@ function updateCart() {
   let total = 0;
   cards.forEach(card => {
     const input = card.querySelector('input');
-    const quantity = parseInt(input.value);
+    const qty = parseInt(input.value);
     const name = card.dataset.name;
     const price = parseFloat(card.dataset.price);
-    if (quantity > 0) {
-      cartText += `${name} x${quantity} - ${(price*quantity).toFixed(2)} €\n`;
-      total += price * quantity;
+    if (qty > 0) {
+      cartText += `${name} x${qty} - ${(price*qty).toFixed(2)} €\n`;
+      total += price * qty;
     }
   });
   cartItemsDiv.textContent = cartText || 'Aucun article sélectionné';
   totalDiv.textContent = total ? `Total: ${total.toFixed(2)} €` : '';
 }
 
-// Boutons + / -
 cards.forEach(card => {
-  const minusBtn = card.querySelector('.minus');
-  const plusBtn = card.querySelector('.plus');
+  const minus = card.querySelector('.minus');
+  const plus = card.querySelector('.plus');
   const input = card.querySelector('input');
 
-  minusBtn.addEventListener('click', () => {
-    let val = parseInt(input.value);
-    if (val > 0) input.value = val - 1;
+  minus.addEventListener('click', () => {
+    if (input.value > 0) input.value--;
     updateCart();
   });
-
-  plusBtn.addEventListener('click', () => {
-    let val = parseInt(input.value);
-    input.value = val + 1;
+  plus.addEventListener('click', () => {
+    input.value++;
     updateCart();
   });
-
   input.addEventListener('input', updateCart);
 });
 
-// Désactive/active le sélecteur si "Dès que possible"
 asapCheckbox.addEventListener('change', () => {
   deliveryInput.disabled = asapCheckbox.checked;
 });
 
-// Toggle panier
 cartToggle.addEventListener('click', () => {
   cartBody.classList.toggle('open');
-  toggleArrow.textContent = cartBody.classList.contains('open') ? '⬇️' : '⬆️';
+  toggle-arrow.textContent = cartBody.classList.contains('open') ? '⬇️' : '⬆️';
 });
 
-function formatDateReadable(datetimeStr) {
-  const date = new Date(datetimeStr);
-  if (isNaN(date)) return '';
-  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
-  return date.toLocaleDateString('fr-FR', options);
+function formatDateReadable(str) {
+  const d = new Date(str);
+  if (isNaN(d)) return '';
+  return d.toLocaleString('fr-FR', { weekday:'long', day:'numeric', month:'long', hour:'2-digit', minute:'2-digit' });
 }
 
-// WhatsApp
 whatsappBtn.addEventListener('click', () => {
-  let message = '🛒 **Ma commande :**\n';
+  let message = '🛒 *Commande :*\n';
   let total = 0;
-
   cards.forEach(card => {
-    const input = card.querySelector('input');
-    const quantity = parseInt(input.value);
-    const name = card.dataset.name;
+    const qty = parseInt(card.querySelector('input').value);
     const price = parseFloat(card.dataset.price);
-    if (quantity > 0) {
-      message += `- ${name} x${quantity} = ${(price*quantity).toFixed(2)} €\n`;
-      total += price * quantity;
+    if (qty > 0) {
+      message += `- ${card.dataset.name} x${qty} = ${(price*qty).toFixed(2)} €\n`;
+      total += price*qty;
     }
   });
-
-  if (total === 0) {
-    alert('Veuillez sélectionner au moins un article.');
-    return;
-  }
-
+  if (total === 0) { alert('Ajoute au moins un article'); return; }
   message += `💰 Total: ${total.toFixed(2)} €\n`;
+  if (asapCheckbox.checked) message += '⏱️ Dès que possible';
+  else if (deliveryInput.value) message += `📅 ${formatDateReadable(deliveryInput.value)}`;
 
-  if (asapCheckbox.checked) {
-    message += `⏱️ Heure souhaitée : Dès que possible`;
-  } else if (deliveryInput.value) {
-    message += `📅 Heure souhaitée : ${formatDateReadable(deliveryInput.value)}`;
-  }
-
-  const phoneNumber = '33649855544'; // Remplace par ton numéro WhatsApp (sans le +)
-  const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-  window.open(url, '_blank');
+  const phoneNumber = '33612345678'; // remplace par ton numéro
+  window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, '_blank');
 });
 
 updateCart();
