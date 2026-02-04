@@ -3,29 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Menu Restaurant</title>
+<title>Menu</title>
 
 <style>
 html { scroll-behavior: smooth; }
-
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: system-ui, sans-serif;
   background: #f6f6f6;
-  padding-bottom: 190px;
+  padding-bottom: 200px;
 }
 
-/* ===== MENU CATEGORIES ===== */
+h1 { text-align: center; }
+
 .category-nav {
   position: sticky;
   top: 0;
-  z-index: 1000;
   background: white;
   display: flex;
   gap: 10px;
   padding: 10px;
   overflow-x: auto;
   border-bottom: 1px solid #ddd;
+  z-index: 1000;
 }
 
 .category-nav a {
@@ -34,22 +34,9 @@ body {
   border-radius: 20px;
   text-decoration: none;
   color: #333;
-  font-size: 14px;
   white-space: nowrap;
 }
 
-.category-nav a:hover {
-  background: #25D366;
-  color: white;
-}
-
-/* ===== TITRES ===== */
-h1 {
-  text-align: center;
-  margin: 15px 0;
-}
-
-/* ===== CATEGORIES ===== */
 .category {
   padding: 15px;
 }
@@ -59,7 +46,6 @@ h1 {
   padding-left: 10px;
 }
 
-/* ===== CARTES ===== */
 .menu-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
@@ -69,7 +55,7 @@ h1 {
 .card {
   background: white;
   border-radius: 14px;
-  box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+  box-shadow: 0 8px 18px rgba(0,0,0,.08);
   overflow: hidden;
   text-align: center;
 }
@@ -80,19 +66,9 @@ h1 {
   object-fit: cover;
 }
 
-.card h3 {
-  margin: 8px 0 4px;
-}
-
-.card p {
-  margin: 0;
-  color: #666;
-}
-
 .qty {
   display: flex;
   justify-content: center;
-  align-items: center;
   gap: 10px;
   padding: 10px;
 }
@@ -107,12 +83,7 @@ h1 {
   font-size: 18px;
 }
 
-.qty input {
-  width: 40px;
-  text-align: center;
-}
-
-/* ===== PANIER ===== */
+/* PANIER */
 .cart-container {
   position: fixed;
   bottom: 0;
@@ -137,7 +108,7 @@ h1 {
   background: white;
   max-height: 0;
   overflow: hidden;
-  transition: max-height .35s ease;
+  transition: max-height .3s ease;
   padding: 0 15px;
 }
 
@@ -153,159 +124,216 @@ h1 {
   border: none;
   padding: 12px;
   border-radius: 10px;
-  font-size: 16px;
   margin-top: 10px;
 }
 
-.asap {
-  display: flex;
-  gap: 8px;
-  margin: 10px 0;
+.whatsapp-btn:disabled {
+  background: #ccc;
+}
+
+.closed {
+  color: red;
+  font-weight: bold;
 }
 </style>
 </head>
 
 <body>
 
-<h1>🍽️ Menu</h1>
+<h1 id="restaurant-name">🍽️ Menu</h1>
+<p id="open-status" style="text-align:center;"></p>
 
-<!-- CATEGORIES -->
-<div class="category-nav">
-  <a href="#entrees">Entrées</a>
-  <a href="#plats">Plats</a>
-  <a href="#desserts">Desserts</a>
-</div>
-
-<!-- ENTREES -->
-<div class="category" id="entrees">
-  <h2>Entrées</h2>
-  <div class="menu-grid">
-    <div class="card" data-name="Bruschetta 🍅" data-price="6">
-      <img src="https://images.unsplash.com/photo-1604908177522-4028e69c5c68">
-      <h3>Bruschetta</h3>
-      <p>6,00 €</p>
-      <div class="qty">
-        <button class="minus">−</button>
-        <input type="number" value="0" min="0">
-        <button class="plus">+</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- PLATS -->
-<div class="category" id="plats">
-  <h2>Plats</h2>
-  <div class="menu-grid">
-    <div class="card" data-name="Burger Gourmet 🍔" data-price="12.9">
-      <img src="https://images.unsplash.com/photo-1550547660-d9450f859349">
-      <h3>Burger Gourmet</h3>
-      <p>12,90 €</p>
-      <div class="qty">
-        <button class="minus">−</button>
-        <input type="number" value="0" min="0">
-        <button class="plus">+</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- DESSERTS -->
-<div class="category" id="desserts">
-  <h2>Desserts</h2>
-  <div class="menu-grid">
-    <div class="card" data-name="Tiramisu 🍰" data-price="6">
-      <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587">
-      <h3>Tiramisu</h3>
-      <p>6,00 €</p>
-      <div class="qty">
-        <button class="minus">−</button>
-        <input type="number" value="0" min="0">
-        <button class="plus">+</button>
-      </div>
-    </div>
-  </div>
-</div>
+<div class="category-nav" id="category-nav"></div>
+<div id="menu"></div>
 
 <!-- PANIER -->
 <div class="cart-container">
   <div class="cart-header" id="cart-toggle">
-    🛒 Mon panier
-    <span id="arrow">⬆️</span>
+    🛒 Mon panier <span id="arrow">⬆️</span>
   </div>
   <div class="cart-body" id="cart-body">
     <pre id="cart-items">Aucun article</pre>
     <p id="total"></p>
 
-    <div class="asap">
-      <input type="checkbox" id="asap">
-      <label for="asap">Dès que possible ⏱️</label>
-    </div>
+    <label>
+      <input type="checkbox" id="asap"> Dès que possible ⏱️
+    </label>
 
-    <input type="datetime-local" id="datetime" style="width:100%">
+    <input type="datetime-local" id="datetime" style="width:100%;margin-top:8px">
 
     <button class="whatsapp-btn" id="send">Envoyer WhatsApp 📲</button>
   </div>
 </div>
 
 <script>
-const cards = document.querySelectorAll('.card');
-const cartItems = document.getElementById('cart-items');
-const totalDiv = document.getElementById('total');
-const cartToggle = document.getElementById('cart-toggle');
-const cartBody = document.getElementById('cart-body');
-const arrow = document.getElementById('arrow');
+/* ===== CONFIG AIRTABLE ===== */
+const BASE_ID = "appXXXXXXXX";
+const API_KEY = "patXXXXXXXX";
+const headers = { Authorization: `Bearer ${API_KEY}` };
 
-function updateCart() {
-  let txt = '';
-  let total = 0;
+const params = new URLSearchParams(window.location.search);
+const slug = params.get("resto");
 
-  cards.forEach(c => {
-    const q = +c.querySelector('input').value;
-    const p = +c.dataset.price;
-    if (q > 0) {
-      txt += `• ${c.dataset.name} x${q} = ${(p*q).toFixed(2)}€\n`;
-      total += p*q;
-    }
+let phoneNumber = "";
+let openingHours = [];
+const cards = [];
+
+/* ===== UTILS ===== */
+function timeToMinutes(t) {
+  const [h,m] = t.split(':').map(Number);
+  return h*60+m;
+}
+function todayName() {
+  return new Date().toLocaleDateString('en-US',{weekday:'long'});
+}
+
+/* ===== CHECK OPEN ===== */
+function checkOpen() {
+  const now = new Date();
+  const nowMin = now.getHours()*60+now.getMinutes();
+  const today = todayName();
+
+  const slots = openingHours.filter(h =>
+    h.fields.day === today && h.fields.open
+  );
+
+  for (const s of slots) {
+    const o = timeToMinutes(s.fields.open_time);
+    const c = timeToMinutes(s.fields.close_time);
+    if (nowMin >= o && nowMin <= c) return { open:true };
+  }
+
+  return { open:false, next: slots[0]?.fields.open_time };
+}
+
+/* ===== LOAD DATA ===== */
+async function loadData() {
+  // Restaurant
+  const resto = (await fetch(
+    `https://api.airtable.com/v0/${BASE_ID}/Restaurants?filterByFormula=slug="${slug}"`,
+    { headers }
+  ).then(r=>r.json())).records[0].fields;
+
+  document.getElementById("restaurant-name").textContent = resto.name;
+  phoneNumber = resto.phone;
+
+  // Categories
+  const categories = (await fetch(
+    `https://api.airtable.com/v0/${BASE_ID}/Categories?sort[0][field]=order`,
+    { headers }
+  ).then(r=>r.json())).records;
+
+  // Items
+  const items = (await fetch(
+    `https://api.airtable.com/v0/${BASE_ID}/MenuItems?filterByFormula=available=1`,
+    { headers }
+  ).then(r=>r.json())).records;
+
+  // Hours
+  openingHours = (await fetch(
+    `https://api.airtable.com/v0/${BASE_ID}/OpeningHours`,
+    { headers }
+  ).then(r=>r.json())).records;
+
+  renderMenu(categories, items);
+  handleOpenStatus();
+}
+
+/* ===== RENDER ===== */
+function renderMenu(categories, items) {
+  const nav = document.getElementById("category-nav");
+  const menu = document.getElementById("menu");
+
+  categories.forEach(cat => {
+    nav.innerHTML += `<a href="#${cat.id}">${cat.fields.name}</a>`;
+
+    const section = document.createElement("div");
+    section.className = "category";
+    section.id = cat.id;
+    section.innerHTML = `<h2>${cat.fields.name}</h2><div class="menu-grid"></div>`;
+    const grid = section.querySelector(".menu-grid");
+
+    items.filter(i=>i.fields.category?.includes(cat.id)).forEach(i=>{
+      const card = document.createElement("div");
+      card.className="card";
+      card.dataset.name=i.fields.name;
+      card.dataset.price=i.fields.price;
+      card.innerHTML=`
+        <img src="${i.fields.photo?.[0]?.url||''}">
+        <h3>${i.fields.name}</h3>
+        <p>${i.fields.price.toFixed(2)} €</p>
+        <div class="qty">
+          <button class="minus">−</button>
+          <input type="number" value="0" min="0">
+          <button class="plus">+</button>
+        </div>`;
+      grid.appendChild(card);
+      cards.push(card);
+    });
+    menu.appendChild(section);
   });
 
-  cartItems.textContent = txt || 'Aucun article';
-  totalDiv.textContent = total ? `💰 Total : ${total.toFixed(2)} €` : '';
+  bindCart();
+}
 
-  if (total > 0) {
-    cartBody.classList.add('open');
-    arrow.textContent = '⬇️';
+/* ===== CART ===== */
+function bindCart() {
+  const cartItems = document.getElementById("cart-items");
+  const totalDiv = document.getElementById("total");
+  const cartBody = document.getElementById("cart-body");
+  const arrow = document.getElementById("arrow");
+
+  function update() {
+    let txt="",total=0;
+    cards.forEach(c=>{
+      const q=+c.querySelector("input").value;
+      const p=+c.dataset.price;
+      if(q){
+        txt+=`• ${c.dataset.name} x${q} = ${(p*q).toFixed(2)}€\n`;
+        total+=p*q;
+      }
+    });
+    cartItems.textContent=txt||"Aucun article";
+    totalDiv.textContent=total?`💰 Total : ${total.toFixed(2)} €`:"";
+    if(total){cartBody.classList.add("open");arrow.textContent="⬇️";}
+  }
+
+  cards.forEach(c=>{
+    c.querySelector(".plus").onclick=()=>{c.querySelector("input").value++;update();}
+    c.querySelector(".minus").onclick=()=>{if(c.querySelector("input").value>0){c.querySelector("input").value--;update();}}
+  });
+
+  document.getElementById("cart-toggle").onclick=()=>{
+    cartBody.classList.toggle("open");
+    arrow.textContent=cartBody.classList.contains("open")?"⬇️":"⬆️";
+  };
+
+  document.getElementById("send").onclick=()=>{
+    if(!totalDiv.textContent)return alert("Ajoute un plat 😉");
+    let msg=`🛒 *Commande*\n\n${cartItems.textContent}\n${totalDiv.textContent}`;
+    if(asap.checked)msg+="\n⏱️ Dès que possible";
+    else if(datetime.value)msg+=`\n🕒 Pour : ${datetime.value.replace('T',' ')}`;
+    window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(msg)}`);
+  };
+}
+
+/* ===== OPEN STATUS ===== */
+function handleOpenStatus() {
+  const status = checkOpen();
+  const btn = document.getElementById("send");
+  const txt = document.getElementById("open-status");
+
+  if(!status.open){
+    btn.disabled=true;
+    txt.innerHTML=`⛔ Restaurant fermé ${status.next?`– ouvre à ${status.next}`:''}`;
+    txt.className="closed";
+    asap.disabled=true;
+  } else {
+    txt.innerHTML="🟢 Restaurant ouvert";
   }
 }
 
-cards.forEach(c => {
-  c.querySelector('.plus').onclick = () => { c.querySelector('input').value++; updateCart(); };
-  c.querySelector('.minus').onclick = () => {
-    if (c.querySelector('input').value > 0) {
-      c.querySelector('input').value--;
-      updateCart();
-    }
-  };
-});
-
-cartToggle.onclick = () => {
-  cartBody.classList.toggle('open');
-  arrow.textContent = cartBody.classList.contains('open') ? '⬇️' : '⬆️';
-};
-
-document.getElementById('send').onclick = () => {
-  if (!totalDiv.textContent) return alert('Ajoute au moins un plat 😉');
-
-  let message = `🛒 *Commande*\n\n${cartItems.textContent}\n${totalDiv.textContent}`;
-
-  if (document.getElementById('asap').checked) {
-    message += `\n⏱️ Dès que possible`;
-  } else if (datetime.value) {
-    message += `\n🕒 Pour : ${datetime.value.replace('T',' ')}`;
-  }
-
-  window.open(`https://wa.me/33612345678?text=${encodeURIComponent(message)}`);
-};
+loadData();
 </script>
 
 </body>
